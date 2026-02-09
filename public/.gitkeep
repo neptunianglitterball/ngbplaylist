@@ -1,0 +1,3 @@
+# Static assets go here. They are served from the site root.
+# Put welcome-bg.mp4 here to use it as the welcome page background video fallback.
+# URL in the app: /welcome-bg.mp4
