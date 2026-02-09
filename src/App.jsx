@@ -635,9 +635,11 @@ const App = () => {
                       </button>
                     </div>
                     <p className="text-[10px] terminal-text-dim uppercase tracking-wider mt-1">
-                      {isRedirectUriSafeForSpotify()
-                        ? <>Open this app at <span className="terminal-glow-cyan">{getRedirectUri().replace(/\/$/, '')}</span> and add <span className="break-all">{getRedirectUri()}</span> in Spotify Dashboard. Keep this tab open — Spotify redirects back here.</>
-                        : <>Create in Spotify only works at <span className="terminal-glow-cyan">http://127.0.0.1:5173</span> (same computer as <code className="text-[9px]">npm run dev</code>). You are on {typeof window !== 'undefined' ? window.location.host : '…'}.</>
+                      {typeof window !== 'undefined' && window.location.protocol === 'https:'
+                        ? 'Keep this tab open — Spotify will redirect you back here after you sign in.'
+                        : isRedirectUriSafeForSpotify()
+                          ? <>Open this app at <span className="terminal-glow-cyan">{getRedirectUri().replace(/\/$/, '')}</span> and add <span className="break-all">{getRedirectUri()}</span> in Spotify Dashboard. Keep this tab open — Spotify redirects back here.</>
+                          : <>Create in Spotify only works at <span className="terminal-glow-cyan">http://127.0.0.1:5173</span> (same computer as <code className="text-[9px]">npm run dev</code>). You are on {window.location.host}.</>
                       }
                     </p>
                   </div>
