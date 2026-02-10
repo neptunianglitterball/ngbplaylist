@@ -240,7 +240,7 @@ const App = () => {
       { artist: "Kirlian Camera", title: "Blue Rooms", year: 1984 },
       { artist: "Alexander Robotnick", title: "Dance Boy Dance", year: 1983 },
       { artist: "Fred Ventura", title: "Wind of Change", year: 1984 },
-      { artist: "Fockewulf 190", title: "Body Heat (Instrumental)", year: 1984 },
+      { artist: "Fockewulf 190", title: "Body Heat", year: 1984 },
       { artist: "Steel Mind", title: "Bad Passion", year: 1982 },
       { artist: "B.W.H.", title: "Stop", year: 1983 },
       { artist: "Charlie", title: "Spacer Woman", year: 1983 },
@@ -917,10 +917,10 @@ const App = () => {
                   {Object.values(dancefloorCounts).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0).toLocaleString()} discovered worldwide
                 </p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-[11px] terminal-text-green">
-                  {Object.entries(dancefloorCounts)
-                    .filter(([, n]) => typeof n === 'number')
-                    .sort((a, b) => (b[1] || 0) - (a[1] || 0))
-                    .map(([id, n]) => (
+                  {Object.keys(ARCHETYPES)
+                    .map((id) => ({ id, n: (typeof dancefloorCounts[id] === 'number' ? dancefloorCounts[id] : 0) }))
+                    .sort((a, b) => b.n - a.n)
+                    .map(({ id, n }) => (
                       <div key={id} className="flex justify-between gap-2">
                         <span className="truncate">{ARCHETYPES[id]?.title?.replace(/^THE\s+/i, '') || id}</span>
                         <span className="terminal-glow-orange shrink-0">{Number(n).toLocaleString()}</span>

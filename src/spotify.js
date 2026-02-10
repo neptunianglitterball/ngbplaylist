@@ -250,7 +250,8 @@ function pickBestMatch(items, artist, title) {
       }
     }
   }
-  return items[0].uri;
+  // Do not return first result when no match — avoids adding wrong track (e.g. different artist)
+  return null;
 }
 
 export async function searchTrack(artist, title) {
