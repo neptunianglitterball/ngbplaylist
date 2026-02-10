@@ -760,31 +760,38 @@ const App = () => {
         )}
 
         {step === 'quiz' && (
-          <div className="w-full flex flex-col space-y-6 animate-in slide-in-from-bottom-12 duration-700 font-terminal-mono text-left max-w-2xl mx-auto">
-            <div className="flex items-center gap-4 border-b border-[#00ff88] border-opacity-40 pb-3">
-              <span className="terminal-glow-cyan text-[#00ff88]">{QUESTION_ICONS[activeQuestions[currentQuestion]?.iconKey] ?? defaultQuestionIcon}</span>
-              <div>
-                <div className="text-[11px] uppercase tracking-[0.3em] terminal-text-dim">QUESTION</div>
-                <div className="terminal-glow-cyan text-lg tracking-widest">
-                  {String(currentQuestion + 1).padStart(2, '0')} / 05
-                </div>
-              </div>
+          <div className="quiz-terminal w-full flex flex-col space-y-5 animate-in slide-in-from-bottom-12 duration-700 font-terminal-mono text-left max-w-2xl mx-auto relative">
+            <div className="flex items-center gap-3 flex-wrap">
+              <span className="terminal-glow-cyan text-[#00ff88] text-sm uppercase tracking-widest">QUESTION</span>
+              <span className="terminal-block-inline px-2 py-1 text-sm">
+                {String(currentQuestion + 1).padStart(2, '0')}/05
+              </span>
+              <span className="inline-flex items-center gap-0.5 text-[#00ff88] ml-2 text-sm" aria-hidden>
+                [{[0, 1, 2, 3, 4].map((i) => (
+                  <span key={i} className={i === currentQuestion ? 'opacity-100' : 'opacity-35'}>|</span>
+                ))}]
+              </span>
             </div>
-            <div className="terminal-panel bg-black/40 p-5 md:p-6">
-              <div className="terminal-text-green text-base md:text-lg leading-snug uppercase tracking-wide">
+            <div className="terminal-question-block">
+              <p className="text-base md:text-lg leading-snug uppercase tracking-wide font-medium">
                 {activeQuestions[currentQuestion].text}
-              </div>
+              </p>
             </div>
-            <div className="space-y-2">
-              <div className="text-[10px] uppercase tracking-[0.4em] terminal-text-dim mb-3">SELECT OPTION ===&gt;</div>
+            <p className="text-[#00ff88] text-xs uppercase tracking-widest terminal-text-dim">_SELECT YOUR OPTION:</p>
+            <div className="space-y-0">
               {activeQuestions[currentQuestion].options.map((opt, idx) => (
                 <button
                   key={idx}
                   onClick={() => handleAnswer(opt.type, idx)}
-                  className={`w-full terminal-option flex items-center gap-4 py-3 px-4 text-left font-terminal-mono text-sm md:text-base uppercase tracking-wide ${circling === idx ? 'terminal-option-selected' : 'terminal-text-green'}`}
+                  className="w-full text-left font-terminal-mono text-sm md:text-base uppercase tracking-wide py-2 block group hover:opacity-90 transition-opacity"
                 >
-                  <span className="terminal-text-dim w-6">{idx + 1}.</span>
-                  <span className={circling === idx ? 'terminal-glow-orange' : ''}>{opt.text}</span>
+                  <span className="terminal-text-dim text-[#00ff88]/80 w-12 inline-block shrink-0">{(idx + 1).toString().padStart(3, '0')}</span>
+                  {circling === idx ? (
+                    <span className="terminal-option-block text-[#0a0e0a]">{opt.text}</span>
+                  ) : (
+                    <span className="terminal-text-green text-[#00ff88]">{opt.text}</span>
+                  )}
+                  <hr className="terminal-option-dots" />
                 </button>
               ))}
             </div>
