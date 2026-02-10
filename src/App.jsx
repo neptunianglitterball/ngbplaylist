@@ -291,6 +291,7 @@ const App = () => {
   const [result, setResult] = useState(null);
   const [copyStatus, setCopyStatus] = useState(null);
   const [circling, setCircling] = useState(null);
+  const [questionTransitioning, setQuestionTransitioning] = useState(false);
   const [spotifyStatus, setSpotifyStatus] = useState('idle'); // idle | auth-needed | creating | success | error
   const [spotifyPlaylistUrl, setSpotifyPlaylistUrl] = useState(null);
   const [spotifyError, setSpotifyError] = useState(null);
@@ -396,18 +397,27 @@ const App = () => {
     setStep('quiz');
   };
 
+  const haptic = (pattern) => {
+    if (typeof navigator !== 'undefined' && navigator.vibrate) {
+      navigator.vibrate(pattern);
+    }
+  };
+
   const handleAnswer = (type, idx) => {
+    haptic(50);
     setCircling(idx);
+    setQuestionTransitioning(true);
     setTimeout(() => {
       const newAnswers = [...answers, type];
+      setQuestionTransitioning(false);
+      setCircling(null);
       if (currentQuestion + 1 < activeQuestions.length) {
         setAnswers(newAnswers);
         setCurrentQuestion(currentQuestion + 1);
-        setCircling(null);
       } else {
         calculateResult(newAnswers);
       }
-    }, 600);
+    }, 500);
   };
 
   const calculateResult = (finalAnswers) => {
@@ -421,6 +431,7 @@ const App = () => {
     setSpotifyStatus('idle');
     setSpotifyPlaylistUrl(null);
     setSpotifyError(null);
+    haptic([80, 40, 80]);
     setStep('result');
   };
 
@@ -578,7 +589,16 @@ const App = () => {
     <div className={`h-screen w-screen relative overflow-hidden transition-all duration-700 ${step === 'result' ? 'overflow-y-auto bg-[#0a0e0a]' : 'bg-black'}`}>
 
       {/* CRT OVERLAY ENGINE */}
+      <div className="crt-scanlines fixed inset-0 z-[998]" aria-hidden />
       <div className="crt-overlay pointer-events-none fixed inset-0 z-[999]" />
+
+      {/* Vibe-check transition between questions */}
+      {questionTransitioning && (
+        <div className="vibe-check-overlay pointer-events-none fixed inset-0 z-[1000] flex items-center justify-center bg-black/80" aria-hidden>
+          <div className="vibe-check-scanline absolute inset-0 bg-gradient-to-b from-transparent via-[#00ff88]/30 to-transparent origin-top scale-y-0" />
+          <span className="relative text-[#00ff88] font-terminal-mono text-sm uppercase tracking-[0.4em] animate-pulse">ANALYSING...</span>
+        </div>
+      )}
 
       {/* BACKGROUNDS */}
       {step === 'welcome' && (
