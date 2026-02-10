@@ -772,7 +772,10 @@ const App = () => {
                 {activeQuestions[currentQuestion].text}
               </p>
             </div>
-            <p className="text-[#00ff88] text-sm md:text-base uppercase tracking-widest terminal-text-dim pl-[3.75rem]">_SELECT YOUR OPTION:</p>
+            <div className="flex gap-3 items-baseline text-sm md:text-base uppercase tracking-widest terminal-text-dim mt-1">
+              <span className="w-12 shrink-0" />
+              <p className="text-[#00ff88] flex-1">_SELECT YOUR OPTION:</p>
+            </div>
             <div className="space-y-0">
               <hr className="terminal-option-dots" />
               {activeQuestions[currentQuestion].options.map((opt, idx) => (
