@@ -272,16 +272,16 @@ const App = () => {
   };
 
   const MASTER_QUESTION_POOL = [
-    { text: "The Italian Riviera at dusk. What are you driving?", options: [{ text: "A matte-black Lancia Delta with tinted windows", type: "modernist" }, { text: "A custom-tuned Porsche with digital dash", type: "engineer" }, { text: "A silver Alfa Romeo Spider with the top down", type: "escapist" }, { text: "A white Ferrari Testarossa, headed for the city", type: "professional" }, { text: "A beat-up Fiat with 'I Love You' scratched in the paint", type: "visionary" }] },
-    { text: "A synthesizer melody begins. What is its shape?", options: [{ text: "A cold, disciplined line that repeats forever", type: "engineer" }, { text: "A sweeping, emotional arc that breaks your heart", type: "dreamer" }, { text: "A shimmering arpeggio floating into space", type: "cosmic" }, { text: "A low, growling pulse that shakes the floor", type: "mechanic" }, { text: "A sparse, seductive whisper of a sound", type: "minimalist" }] },
-    { text: "You are designing the cover for your debut 12-inch. What's the image?", options: [{ text: "A grainy photograph of an empty concrete room", type: "modernist" }, { text: "A hand-drawn romantic sunset", type: "dreamer" }, { text: "A sleek airbrushed chrome robot", type: "cosmic" }, { text: "A polaroid of the band, no retouching", type: "visionary" }, { text: "Minimalist geometric shapes on black card", type: "engineer" }] },
-    { text: "The dancefloor is packed. What is your role?", options: [{ text: "Sweating in the center, obsessed with the beat", type: "mechanic" }, { text: "Watching the crowd from behind dark glasses", type: "modernist" }, { text: "Dancing too hard, singing every word, not noticing who's watching", type: "visionary" }, { text: "Closing your eyes and imagining you're on Saturn", type: "cosmic" }, { text: "Staring intensely at the person across the room", type: "minimalist" }] },
-    { text: "What is the ultimate purpose of music?", options: [{ text: "To capture a feeling before it disappears", type: "visionary" }, { text: "To cross oceans and achieve success", type: "professional" }, { text: "To say the things I'm too shy to speak", type: "dreamer" }, { text: "To make the world feel like a long Sunday", type: "escapist" }, { text: "To push the body until it forgets the mind", type: "mechanic" }] },
-    { text: "Describe the lighting in your ideal midnight session:", options: [{ text: "A single dim violet light at the far end", type: "minimalist" }, { text: "Piercing white strobes through industrial fog", type: "mechanic" }, { text: "Moving lasers cutting through total darkness", type: "cosmic" }, { text: "A single warm spotlight on the singer", type: "visionary" }, { text: "Warm amber floods and golden accents, like a beach club at closing time", type: "escapist" }] },
-    { text: "You're at a bar in Milan. What are you ordering?", options: [{ text: "A classic Campari and soda, no ice", type: "escapist" }, { text: "A glowing blue futuristic cocktail", type: "cosmic" }, { text: "A fresh glass of water and a sincere smile", type: "visionary" }, { text: "The most expensive Champagne on the list", type: "professional" }, { text: "A warm espresso and a single cigarette", type: "modernist" }] },
-    { text: "How should the vocals make you feel?", options: [{ text: "Distant, ghostly, and slightly menacing", type: "modernist" }, { text: "Soulful, high-energy, and ready for the world", type: "professional" }, { text: "Like a breeze coming off the Tyrrhenian Sea", type: "escapist" }, { text: "Sincere, fragile, and deeply emotional", type: "dreamer" }, { text: "Obsessive, repetitive, and breathy", type: "minimalist" }] },
-    { text: "It's 1983. What is your primary obsession?", options: [{ text: "The texture of fine silk and leather", type: "minimalist" }, { text: "The upcoming launch of the space colony", type: "cosmic" }, { text: "Finding a love that doesn't hurt", type: "dreamer" }, { text: "Improving the efficiency of the sequence", type: "engineer" }, { text: "Escaping the city for the coast", type: "escapist" }] },
-    { text: "You walk home as the sun rises. What are you thinking?", options: [{ text: "I hope no one saw me", type: "minimalist" }, { text: "The machines never sleep", type: "engineer" }, { text: "That was the greatest night of my life", type: "visionary" }, { text: "I should have said something, but it's too late now", type: "dreamer" }, { text: "Everything is already changing", type: "modernist" }] },
+    { iconKey: 'car', text: "The Italian Riviera at dusk. What are you driving?", options: [{ text: "A matte-black Lancia Delta with tinted windows", type: "modernist" }, { text: "A custom-tuned Porsche with digital dash", type: "engineer" }, { text: "A silver Alfa Romeo Spider with the top down", type: "escapist" }, { text: "A white Ferrari Testarossa, headed for the city", type: "professional" }, { text: "A beat-up Fiat with 'I Love You' scratched in the paint", type: "visionary" }] },
+    { iconKey: 'synth', text: "A synthesizer melody begins. What is its shape?", options: [{ text: "A cold, disciplined line that repeats forever", type: "engineer" }, { text: "A sweeping, emotional arc that breaks your heart", type: "dreamer" }, { text: "A shimmering arpeggio floating into space", type: "cosmic" }, { text: "A low, growling pulse that shakes the floor", type: "mechanic" }, { text: "A sparse, seductive whisper of a sound", type: "minimalist" }] },
+    { iconKey: 'cover', text: "You are designing the cover for your debut 12-inch. What's the image?", options: [{ text: "A grainy photograph of an empty concrete room", type: "modernist" }, { text: "A hand-drawn romantic sunset", type: "dreamer" }, { text: "A sleek airbrushed chrome robot", type: "cosmic" }, { text: "A polaroid of the band, no retouching", type: "visionary" }, { text: "Minimalist geometric shapes on black card", type: "engineer" }] },
+    { iconKey: 'dancefloor', text: "The dancefloor is packed. What is your role?", options: [{ text: "Sweating in the center, obsessed with the beat", type: "mechanic" }, { text: "Watching the crowd from behind dark glasses", type: "modernist" }, { text: "Dancing too hard, singing every word, not noticing who's watching", type: "visionary" }, { text: "Closing your eyes and imagining you're on Saturn", type: "cosmic" }, { text: "Staring intensely at the person across the room", type: "minimalist" }] },
+    { iconKey: 'music', text: "What is the ultimate purpose of music?", options: [{ text: "To capture a feeling before it disappears", type: "visionary" }, { text: "To cross oceans and achieve success", type: "professional" }, { text: "To say the things I'm too shy to speak", type: "dreamer" }, { text: "To make the world feel like a long Sunday", type: "escapist" }, { text: "To push the body until it forgets the mind", type: "mechanic" }] },
+    { iconKey: 'light', text: "Describe the lighting in your ideal midnight session:", options: [{ text: "A single dim violet light at the far end", type: "minimalist" }, { text: "Piercing white strobes through industrial fog", type: "mechanic" }, { text: "Moving lasers cutting through total darkness", type: "cosmic" }, { text: "A single warm spotlight on the singer", type: "visionary" }, { text: "Warm amber floods and golden accents, like a beach club at closing time", type: "escapist" }] },
+    { iconKey: 'drink', text: "You're at a bar in Milan. What are you ordering?", options: [{ text: "A classic Campari and soda, no ice", type: "escapist" }, { text: "A glowing blue futuristic cocktail", type: "cosmic" }, { text: "A fresh glass of water and a sincere smile", type: "visionary" }, { text: "The most expensive Champagne on the list", type: "professional" }, { text: "A warm espresso and a single cigarette", type: "modernist" }] },
+    { iconKey: 'vocals', text: "How should the vocals make you feel?", options: [{ text: "Distant, ghostly, and slightly menacing", type: "modernist" }, { text: "Soulful, high-energy, and ready for the world", type: "professional" }, { text: "Like a breeze coming off the Tyrrhenian Sea", type: "escapist" }, { text: "Sincere, fragile, and deeply emotional", type: "dreamer" }, { text: "Obsessive, repetitive, and breathy", type: "minimalist" }] },
+    { iconKey: 'era', text: "It's 1983. What is your primary obsession?", options: [{ text: "The texture of fine silk and leather", type: "minimalist" }, { text: "The upcoming launch of the space colony", type: "cosmic" }, { text: "Finding a love that doesn't hurt", type: "dreamer" }, { text: "Improving the efficiency of the sequence", type: "engineer" }, { text: "Escaping the city for the coast", type: "escapist" }] },
+    { iconKey: 'sunrise', text: "You walk home as the sun rises. What are you thinking?", options: [{ text: "I hope no one saw me", type: "minimalist" }, { text: "The machines never sleep", type: "engineer" }, { text: "That was the greatest night of my life", type: "visionary" }, { text: "I should have said something, but it's too late now", type: "dreamer" }, { text: "Everything is already changing", type: "modernist" }] },
   ];
 
   const [activeQuestions, setActiveQuestions] = useState([]);
@@ -555,35 +555,95 @@ const App = () => {
 
   const glitchBgUrl = "https://cdn.midjourney.com/a97ac3f6-e1e8-439f-a0da-cbe839d758f3/0_0.jpeg";
 
-  /* 80s terminal-style icons for each quiz question (by index) */
-  const TERMINAL_ICONS = [
-    /* 0: car / drive */
-    <svg key="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
-      <path d="M2 14h2l2-4h12l2 4h2v2h-2l-1 2H5l-1-2H2v-2z" />
-      <path d="M6 18v-4M18 18v-4" />
-    </svg>,
-    /* 1: synth / waveform */
-    <svg key="synth" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
-      <path d="M3 12h2M7 8v8M11 6v12M15 10v4M19 4v16" />
-      <rect x="2" y="10" width="20" height="6" rx="0.5" />
-    </svg>,
-    /* 2: cover / frame */
-    <svg key="frame" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
-      <rect x="4" y="4" width="16" height="16" />
-      <path d="M4 4l4 4M20 4l-4 4M4 20l4-4M20 20l-4-4" />
-    </svg>,
-    /* 3: dancefloor / person */
-    <svg key="dance" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
-      <circle cx="12" cy="6" r="2.5" />
-      <path d="M8 22v-8l4-4 4 4v8M12 14v4" />
-      <path d="M6 12h2M16 12h2" />
-    </svg>,
-    /* 4: mission / star */
-    <svg key="mission" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+  /* Question-specific icons (by iconKey) */
+  const QUESTION_ICONS = {
+    car: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <path d="M2 14h2l2-4h12l2 4h2v2h-2l-1 2H5l-1-2H2v-2z" />
+        <path d="M6 18v-4M18 18v-4" />
+      </svg>
+    ),
+    synth: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className="w-8 h-8 shrink-0">
+        <path d="M2 12c2 0 3-4 5-4s3 4 5 4 3-4 5-4 3 4 5 4" />
+        <path d="M2 12c2 0 3 4 5 4s3-4 5-4 3 4 5 4" />
+      </svg>
+    ),
+    cover: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <rect x="4" y="4" width="16" height="16" />
+        <path d="M4 4l4 4M20 4l-4 4M4 20l4-4M20 20l-4-4" />
+      </svg>
+    ),
+    dancefloor: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <circle cx="12" cy="6" r="2.5" />
+        <path d="M8 22v-8l4-4 4 4v8M12 14v4" />
+        <path d="M6 12h2M16 12h2" />
+      </svg>
+    ),
+    music: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <path d="M9 18V5l12-2v13" />
+        <circle cx="6" cy="18" r="3" />
+        <circle cx="18" cy="16" r="3" />
+      </svg>
+    ),
+    light: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <path d="M9 18h6" />
+        <path d="M10 22h4" />
+        <path d="M12 2v2" />
+        <path d="M12 18v2" />
+        <path d="M4.93 4.93l1.41 1.41" />
+        <path d="M17.66 17.66l1.41 1.41" />
+        <path d="M2 12h2" />
+        <path d="M20 12h2" />
+        <path d="M6.34 6.34l1.41-1.41" />
+        <path d="M19.07 19.07l1.41-1.41" />
+        <path d="M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
+        <path d="M12 12l-3 6h6l-3-6z" />
+      </svg>
+    ),
+    drink: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <path d="M8 2h8v6l4 12H4L8 8V2z" />
+        <path d="M8 8h8" />
+      </svg>
+    ),
+    vocals: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" className="w-8 h-8 shrink-0">
+        <path d="M6 10c0 0 2 2 6 2s6-2 6-2" />
+        <path d="M6 14c0 0 2-2 6-2s6 2 6 2" />
+        <path d="M8 10v4M16 10v4" />
+      </svg>
+    ),
+    era: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <rect x="3" y="4" width="18" height="18" rx="2" />
+        <path d="M16 2v4M8 2v4M3 10h18" />
+      </svg>
+    ),
+    sunrise: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <path d="M12 2v4" />
+        <path d="M4.93 4.93l2.83 2.83" />
+        <path d="M2 12h4" />
+        <path d="M4.93 19.07l2.83-2.83" />
+        <path d="M12 18v4" />
+        <path d="M19.07 19.07l-2.83-2.83" />
+        <path d="M22 12h-4" />
+        <path d="M19.07 4.93l-2.83 2.83" />
+        <path d="M12 8a4 4 0 11-4 4" />
+      </svg>
+    ),
+  };
+
+  const defaultQuestionIcon = (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
       <path d="M12 2l2 6h6l-5 4 2 6-5-4-5 4 2-6-5-4h6z" />
-      <path d="M4 18h2M18 18h2M11 22v-2" />
-    </svg>,
-  ];
+    </svg>
+  );
 
   return (
     <div className={`h-screen w-screen relative overflow-hidden transition-all duration-700 ${step === 'result' ? 'overflow-y-auto bg-[#0a0e0a]' : 'bg-black'}`}>
@@ -674,7 +734,7 @@ const App = () => {
         {step === 'quiz' && (
           <div className="w-full flex flex-col space-y-6 animate-in slide-in-from-bottom-12 duration-700 font-terminal-mono text-left max-w-2xl mx-auto">
             <div className="flex items-center gap-4 border-b border-[#00ff88] border-opacity-40 pb-3">
-              <span className="terminal-glow-cyan text-[#00ff88]">{TERMINAL_ICONS[currentQuestion % TERMINAL_ICONS.length]}</span>
+              <span className="terminal-glow-cyan text-[#00ff88]">{QUESTION_ICONS[activeQuestions[currentQuestion]?.iconKey] ?? defaultQuestionIcon}</span>
               <div>
                 <div className="text-[11px] uppercase tracking-[0.3em] terminal-text-dim">QUESTION</div>
                 <div className="terminal-glow-cyan text-lg tracking-widest">
@@ -924,7 +984,7 @@ const App = () => {
 
       {step === 'quiz' && (
         <div className="fixed right-3 top-1/2 -rotate-90 origin-right text-[10px] font-terminal-mono uppercase tracking-[0.4em] terminal-text-dim pointer-events-none">
-          SYSTEM 84-09 • MODERN MUSIC EDITIONS
+          NEPTUNIAN GLITTERBALL / MODERN MUSIC FOR NOSTALGIC EVENINGS
         </div>
       )}
     </div>
