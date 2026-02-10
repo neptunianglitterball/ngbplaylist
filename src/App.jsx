@@ -712,9 +712,7 @@ const App = () => {
       )}
 
       {step === 'result' && (
-        <div className="fixed inset-0 pointer-events-none z-0 terminal-grid-bg">
-          <div className="absolute inset-4 border border-[#00ff88] opacity-20" />
-        </div>
+        <div className="fixed inset-0 pointer-events-none z-0 bg-[#0a0e0a]" />
       )}
 
       <main className={`relative z-10 w-full max-w-2xl mx-auto px-6 flex flex-col items-center ${step === 'result' ? 'pt-8 pb-16 justify-start' : step === 'quiz' ? 'min-h-full pt-6 pb-16 justify-start' : 'h-full justify-center'}`}>
@@ -757,43 +755,45 @@ const App = () => {
         )}
 
         {step === 'quiz' && (
-          <div className="quiz-terminal w-full flex flex-col space-y-5 animate-in slide-in-from-bottom-12 duration-700 font-terminal-mono text-left max-w-2xl mx-auto relative">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="terminal-glow-cyan text-[#00ff88] text-sm uppercase tracking-widest">QUESTION</span>
-              <span className="terminal-block-inline px-2 py-1 text-sm">
+          <div className="quiz-terminal w-full flex flex-col space-y-5 animate-in slide-in-from-bottom-12 duration-700 text-left max-w-2xl mx-auto relative">
+            <div className="flex items-center gap-3 flex-wrap text-sm md:text-base">
+              <span className="terminal-glow-cyan text-[#00ff88] uppercase tracking-widest">QUESTION</span>
+              <span className="terminal-block-inline px-2 py-1">
                 {String(currentQuestion + 1).padStart(2, '0')}/05
               </span>
-              <span className="inline-flex items-center gap-0.5 text-[#00ff88] ml-2 text-sm" aria-hidden>
+              <span className="inline-flex items-center gap-0.5 text-[#00ff88] ml-2" aria-hidden>
                 [{[0, 1, 2, 3, 4].map((i) => (
                   <span key={i} className={i === currentQuestion ? 'opacity-100' : 'opacity-35'}>|</span>
                 ))}]
               </span>
             </div>
-            <div className="terminal-question-block pl-[3.5rem]">
-              <p className="text-base md:text-lg leading-snug uppercase tracking-wide font-medium">
+            <div className="terminal-question-block pl-[3.75rem]">
+              <p className="text-sm md:text-base leading-snug uppercase tracking-wide">
                 {activeQuestions[currentQuestion].text}
               </p>
             </div>
-            <p className="text-[#00ff88] text-xs uppercase tracking-widest terminal-text-dim pl-[3.5rem]">_SELECT YOUR OPTION:</p>
+            <p className="text-[#00ff88] text-sm md:text-base uppercase tracking-widest terminal-text-dim pl-[3.75rem]">_SELECT YOUR OPTION:</p>
             <div className="space-y-0">
+              <hr className="terminal-option-dots" />
               {activeQuestions[currentQuestion].options.map((opt, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => handleAnswer(opt.type, idx)}
-                  className="w-full text-left font-terminal-mono text-sm md:text-base uppercase tracking-wide py-2 block group hover:opacity-90 transition-opacity"
-                >
-                  <div className="flex gap-3 items-start">
-                    <span className="terminal-text-dim text-[#00ff88]/80 w-12 shrink-0">{(idx + 1).toString().padStart(3, '0')}</span>
-                    <span className="flex-1 min-w-0">
-                      {circling === idx ? (
-                        <span className="terminal-option-block text-[#0a0e0a]">{opt.text}</span>
-                      ) : (
-                        <span className="terminal-text-green text-[#00ff88]">{opt.text}</span>
-                      )}
-                    </span>
-                  </div>
+                <React.Fragment key={idx}>
+                  <button
+                    onClick={() => handleAnswer(opt.type, idx)}
+                    className="w-full text-left text-sm md:text-base uppercase tracking-wide py-2 block group hover:opacity-90 transition-opacity"
+                  >
+                    <div className="flex gap-3 items-start">
+                      <span className="terminal-text-dim text-[#00ff88]/80 w-12 shrink-0">{(idx + 1).toString().padStart(3, '0')}</span>
+                      <span className="flex-1 min-w-0">
+                        {circling === idx ? (
+                          <span className="terminal-option-block text-[#0a0e0a]">{opt.text}</span>
+                        ) : (
+                          <span className="terminal-text-green text-[#00ff88]">{opt.text}</span>
+                        )}
+                      </span>
+                    </div>
+                  </button>
                   <hr className="terminal-option-dots" />
-                </button>
+                </React.Fragment>
               ))}
             </div>
           </div>
