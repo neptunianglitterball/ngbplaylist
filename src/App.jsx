@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   ListMusic,
   Moon,
@@ -10,7 +10,10 @@ import {
   Lightbulb,
   Gem,
   Sun,
+  Share2,
+  X,
 } from 'lucide-react';
+import html2canvas from 'html2canvas';
 import {
   redirectToSpotifyAuth,
   exchangeCodeForToken,
@@ -291,7 +294,10 @@ const App = () => {
   const [spotifyStatus, setSpotifyStatus] = useState('idle'); // idle | auth-needed | creating | success | error
   const [spotifyPlaylistUrl, setSpotifyPlaylistUrl] = useState(null);
   const [spotifyError, setSpotifyError] = useState(null);
-  const welcomeVideoRef = React.useRef(null);
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [shareImageLoading, setShareImageLoading] = useState(false);
+  const welcomeVideoRef = useRef(null);
+  const storyCardRef = useRef(null);
 
   // Handle OAuth callback when returning from Spotify
   useEffect(() => {
@@ -428,6 +434,65 @@ const App = () => {
     } catch (err) {
       setSpotifyError(err.message);
       setSpotifyStatus('error');
+    }
+  };
+
+  const getQuizUrl = () => typeof window !== 'undefined' ? window.location.origin : '';
+  const getShareBlurb = (content) => (content || '').replace(/\s+/g, ' ').trim().slice(0, 120) + (content && content.length > 120 ? '…' : '');
+
+  const captureStoryCard = async () => {
+    const el = storyCardRef.current;
+    if (!el) return null;
+    try {
+      const canvas = await html2canvas(el, {
+        scale: 3,
+        useCORS: true,
+        allowTaint: true,
+        backgroundColor: '#0a0e0a',
+        logging: false,
+      });
+      return new Promise((resolve) => canvas.toBlob((blob) => resolve(blob), 'image/png', 1));
+    } catch (e) {
+      console.error('Story capture failed', e);
+      return null;
+    }
+  };
+
+  const handleShareDownload = async () => {
+    setShareImageLoading(true);
+    try {
+      const blob = await captureStoryCard();
+      if (!blob) return;
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `after-midnight-${result?.id || 'archetype'}.png`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } finally {
+      setShareImageLoading(false);
+    }
+  };
+
+  const handleShareNative = async () => {
+    setShareImageLoading(true);
+    try {
+      const blob = await captureStoryCard();
+      if (!blob) return;
+      const file = new File([blob], 'after-midnight-story.png', { type: 'image/png' });
+      if (navigator.share && navigator.canShare?.({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: result?.title || 'Who Are You After Midnight?',
+          text: `I got ${result?.title || 'an archetype'} — find yours at ${getQuizUrl()}`,
+        });
+      } else {
+        handleShareDownload();
+      }
+    } catch (e) {
+      if (e.name !== 'AbortError') handleShareDownload();
+    } finally {
+      setShareImageLoading(false);
     }
   };
 
@@ -633,6 +698,13 @@ const App = () => {
                       <button onClick={copyToClipboard} className="text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2 hover:bg-[#00ff88] hover:text-black transition-all terminal-option">
                         {copyStatus === 'success' ? 'COPIED' : 'COPY TRACKLIST'}
                       </button>
+                      <button
+                        type="button"
+                        onClick={() => setShareModalOpen(true)}
+                        className="text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2 hover:bg-[#00ff88] hover:text-black transition-all terminal-option flex items-center gap-2"
+                      >
+                        <Share2 className="w-4 h-4" /> SHARE TO STORY
+                      </button>
                     </div>
                     <p className="text-[10px] terminal-text-dim uppercase tracking-wider mt-1">
                       {typeof window !== 'undefined' && window.location.protocol === 'https:'
@@ -680,6 +752,66 @@ const App = () => {
                 RETAKE THE TEST
               </button>
             </div>
+
+            {/* Share to story modal */}
+            {shareModalOpen && (
+              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80" onClick={() => setShareModalOpen(false)}>
+                <div className="flex flex-col items-center gap-4 max-w-[min(100vw,400px)]" onClick={(e) => e.stopPropagation()}>
+                  <div className="w-full flex justify-end">
+                    <button type="button" onClick={() => setShareModalOpen(false)} className="p-2 text-[#00ff88] hover:bg-[#00ff88]/20 rounded" aria-label="Close">
+                      <X className="w-6 h-6" />
+                    </button>
+                  </div>
+                  <div
+                    ref={storyCardRef}
+                    className="w-full max-w-[360px] mx-auto rounded-lg overflow-hidden border-2 border-[#00ff88]/50 shrink-0"
+                    style={{ aspectRatio: '9/16', background: '#0a0e0a' }}
+                  >
+                    <div className="relative w-full h-full flex flex-col justify-end p-5 text-white font-terminal-mono">
+                      {ARCHETYPE_IMAGES[result.id] ? (
+                        <>
+                          <img
+                            src={ARCHETYPE_IMAGES[result.id]}
+                            alt=""
+                            className="absolute inset-0 w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
+                        </>
+                      ) : (
+                        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e0a] via-[#0d1a0d] to-[#0a0e0a]" />
+                      )}
+                      <div className="relative z-10 space-y-2">
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-[#00ff88]/90">TEST RESULT</p>
+                        <h2 className="text-xl md:text-2xl uppercase leading-tight tracking-wider text-[#00ff88] font-bold" style={{ textShadow: '0 0 12px rgba(0,255,136,0.5)' }}>{result.title}</h2>
+                        <p className="text-sm uppercase tracking-wide text-[#ff8c00]" style={{ textShadow: '0 0 8px rgba(255,140,0,0.4)' }}>{result.subtitle}</p>
+                        <p className="text-xs text-[#00ff88]/95 leading-relaxed line-clamp-3">{getShareBlurb(result.content)}</p>
+                        <p className="text-[10px] uppercase tracking-wider text-[#00ff88] pt-2 border-t border-[#00ff88]/40 mt-3">
+                          Find your archetype — {getQuizUrl()}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 w-full">
+                    <button
+                      type="button"
+                      onClick={handleShareDownload}
+                      disabled={shareImageLoading}
+                      className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60"
+                    >
+                      {shareImageLoading ? '…' : 'DOWNLOAD IMAGE'}
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handleShareNative}
+                      disabled={shareImageLoading}
+                      className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60 flex items-center justify-center gap-2"
+                    >
+                      <Share2 className="w-4 h-4" /> {shareImageLoading ? '…' : 'SHARE'}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         )}
       </main>
