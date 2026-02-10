@@ -296,6 +296,7 @@ const App = () => {
   const [spotifyError, setSpotifyError] = useState(null);
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [shareImageLoading, setShareImageLoading] = useState(false);
+  const [shareLinkCopied, setShareLinkCopied] = useState(false);
   const welcomeVideoRef = useRef(null);
   const storyCardRef = useRef(null);
 
@@ -753,20 +754,24 @@ const App = () => {
               </button>
             </div>
 
-            {/* Share to story modal — fits viewport height on mobile */}
+            {/* Share to story modal — scrollable so CTAs always reachable on mobile */}
             {shareModalOpen && (
-              <div className="fixed inset-0 z-[100] flex flex-col bg-black/90 h-full min-h-[100dvh] max-h-[100dvh] sm:max-h-none sm:items-center sm:justify-center sm:p-4" onClick={() => setShareModalOpen(false)}>
-                <div className="flex flex-col h-full max-h-[100dvh] sm:h-auto sm:max-h-none w-full max-w-[min(100vw,400px)] sm:gap-4 gap-3 p-4 flex-1 min-h-0 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+              <div className="fixed inset-0 z-[100] flex flex-col bg-black/90 max-h-[100dvh] sm:items-center sm:justify-center sm:p-4" onClick={() => setShareModalOpen(false)}>
+                <div
+                  className="flex flex-col w-full max-w-[min(100vw,400px)] sm:max-h-none gap-3 p-4 mx-auto overflow-y-auto overflow-x-hidden overscroll-contain"
+                  style={{ maxHeight: '100dvh', WebkitOverflowScrolling: 'touch' }}
+                  onClick={(e) => e.stopPropagation()}
+                >
                   <div className="w-full flex justify-end shrink-0">
                     <button type="button" onClick={() => setShareModalOpen(false)} className="p-2 text-[#00ff88] hover:bg-[#00ff88]/20 rounded" aria-label="Close">
                       <X className="w-6 h-6" />
                     </button>
                   </div>
-                  <div className="flex-1 min-h-0 flex items-center justify-center shrink-0">
+                  <div className="w-full max-w-[360px] mx-auto shrink-0">
                     <div
                       ref={storyCardRef}
-                      className="h-full max-h-full w-auto max-w-[360px] rounded-lg overflow-hidden border-2 border-[#00ff88]/50 shrink-0"
-                      style={{ aspectRatio: '9/16', background: '#0a0e0a', maxHeight: 'min(640px, 100%)' }}
+                      className="w-full rounded-lg overflow-hidden border-2 border-[#00ff88]/50"
+                      style={{ aspectRatio: '9/16', background: '#0a0e0a' }}
                     >
                     <div className="relative w-full h-full flex flex-col justify-end p-5 text-white font-terminal-mono">
                       {ARCHETYPE_IMAGES[result.id] ? (
@@ -793,23 +798,35 @@ const App = () => {
                     </div>
                     </div>
                   </div>
-                  <div className="flex gap-3 w-full shrink-0">
+                  <div className="flex flex-col gap-3 w-full shrink-0">
+                    <div className="flex gap-3 w-full">
+                      <button
+                        type="button"
+                        onClick={handleShareDownload}
+                        disabled={shareImageLoading}
+                        className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60"
+                      >
+                        {shareImageLoading ? '…' : 'DOWNLOAD IMAGE'}
+                      </button>
+                      <button
+                        type="button"
+                        onClick={handleShareNative}
+                        disabled={shareImageLoading}
+                        className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60 flex items-center justify-center gap-2"
+                      >
+                        <Share2 className="w-4 h-4" /> {shareImageLoading ? '…' : 'SHARE'}
+                      </button>
+                    </div>
                     <button
                       type="button"
-                      onClick={handleShareDownload}
-                      disabled={shareImageLoading}
-                      className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60"
+                      onClick={() => { navigator.clipboard?.writeText(getQuizUrl()); setShareLinkCopied(true); setTimeout(() => setShareLinkCopied(false), 2000); }}
+                      className="w-full text-[10px] uppercase border border-[#ff8c00] text-[#ff8c00] px-4 py-2.5 hover:bg-[#ff8c00] hover:text-black transition-all terminal-option flex items-center justify-center gap-2"
                     >
-                      {shareImageLoading ? '…' : 'DOWNLOAD IMAGE'}
+                      {shareLinkCopied ? 'LINK COPIED — ADD AS LINK STICKER' : 'COPY QUIZ LINK — ADD AS LINK STICKER'}
                     </button>
-                    <button
-                      type="button"
-                      onClick={handleShareNative}
-                      disabled={shareImageLoading}
-                      className="flex-1 text-[10px] uppercase border border-[#00ff88] text-[#00ff88] px-4 py-2.5 hover:bg-[#00ff88] hover:text-black transition-all terminal-option disabled:opacity-60 flex items-center justify-center gap-2"
-                    >
-                      <Share2 className="w-4 h-4" /> {shareImageLoading ? '…' : 'SHARE'}
-                    </button>
+                    <p className="text-[10px] terminal-text-dim text-center">
+                      Add the quiz link as a link sticker on your story so friends can tap to play.
+                    </p>
                   </div>
                 </div>
               </div>
