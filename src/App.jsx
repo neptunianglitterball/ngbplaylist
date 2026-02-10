@@ -708,10 +708,7 @@ const App = () => {
       )}
 
       {step === 'quiz' && (
-        <div className="absolute inset-0 z-0 animate-in fade-in duration-500 terminal-grid-bg">
-          <div className="absolute inset-4 border border-[#00ff88] pointer-events-none opacity-30" />
-          <div className="absolute inset-8 border border-[#00ff88] pointer-events-none opacity-10" />
-        </div>
+        <div className="absolute inset-0 z-0 animate-in fade-in duration-500 bg-[#0a0e0a]" />
       )}
 
       {step === 'result' && (
@@ -772,12 +769,12 @@ const App = () => {
                 ))}]
               </span>
             </div>
-            <div className="terminal-question-block">
+            <div className="terminal-question-block pl-[3.5rem]">
               <p className="text-base md:text-lg leading-snug uppercase tracking-wide font-medium">
                 {activeQuestions[currentQuestion].text}
               </p>
             </div>
-            <p className="text-[#00ff88] text-xs uppercase tracking-widest terminal-text-dim">_SELECT YOUR OPTION:</p>
+            <p className="text-[#00ff88] text-xs uppercase tracking-widest terminal-text-dim pl-[3.5rem]">_SELECT YOUR OPTION:</p>
             <div className="space-y-0">
               {activeQuestions[currentQuestion].options.map((opt, idx) => (
                 <button
@@ -785,12 +782,16 @@ const App = () => {
                   onClick={() => handleAnswer(opt.type, idx)}
                   className="w-full text-left font-terminal-mono text-sm md:text-base uppercase tracking-wide py-2 block group hover:opacity-90 transition-opacity"
                 >
-                  <span className="terminal-text-dim text-[#00ff88]/80 w-12 inline-block shrink-0">{(idx + 1).toString().padStart(3, '0')}</span>
-                  {circling === idx ? (
-                    <span className="terminal-option-block text-[#0a0e0a]">{opt.text}</span>
-                  ) : (
-                    <span className="terminal-text-green text-[#00ff88]">{opt.text}</span>
-                  )}
+                  <div className="flex gap-3 items-start">
+                    <span className="terminal-text-dim text-[#00ff88]/80 w-12 shrink-0">{(idx + 1).toString().padStart(3, '0')}</span>
+                    <span className="flex-1 min-w-0">
+                      {circling === idx ? (
+                        <span className="terminal-option-block text-[#0a0e0a]">{opt.text}</span>
+                      ) : (
+                        <span className="terminal-text-green text-[#00ff88]">{opt.text}</span>
+                      )}
+                    </span>
+                  </div>
                   <hr className="terminal-option-dots" />
                 </button>
               ))}
@@ -1031,11 +1032,6 @@ const App = () => {
         )}
       </main>
 
-      {step === 'quiz' && (
-        <div className="fixed right-3 top-1/2 -rotate-90 origin-right text-[10px] font-terminal-mono uppercase tracking-[0.4em] terminal-text-dim pointer-events-none">
-          NEPTUNIAN GLITTERBALL / MODERN MUSIC FOR NOSTALGIC EVENINGS
-        </div>
-      )}
     </div>
   );
 };
