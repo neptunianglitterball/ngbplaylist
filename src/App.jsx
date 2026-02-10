@@ -753,20 +753,21 @@ const App = () => {
               </button>
             </div>
 
-            {/* Share to story modal */}
+            {/* Share to story modal — fits viewport height on mobile */}
             {shareModalOpen && (
-              <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80" onClick={() => setShareModalOpen(false)}>
-                <div className="flex flex-col items-center gap-4 max-w-[min(100vw,400px)]" onClick={(e) => e.stopPropagation()}>
-                  <div className="w-full flex justify-end">
+              <div className="fixed inset-0 z-[100] flex flex-col bg-black/90 h-full min-h-[100dvh] max-h-[100dvh] sm:max-h-none sm:items-center sm:justify-center sm:p-4" onClick={() => setShareModalOpen(false)}>
+                <div className="flex flex-col h-full max-h-[100dvh] sm:h-auto sm:max-h-none w-full max-w-[min(100vw,400px)] sm:gap-4 gap-3 p-4 flex-1 min-h-0 overflow-y-auto" onClick={(e) => e.stopPropagation()}>
+                  <div className="w-full flex justify-end shrink-0">
                     <button type="button" onClick={() => setShareModalOpen(false)} className="p-2 text-[#00ff88] hover:bg-[#00ff88]/20 rounded" aria-label="Close">
                       <X className="w-6 h-6" />
                     </button>
                   </div>
-                  <div
-                    ref={storyCardRef}
-                    className="w-full max-w-[360px] mx-auto rounded-lg overflow-hidden border-2 border-[#00ff88]/50 shrink-0"
-                    style={{ aspectRatio: '9/16', background: '#0a0e0a' }}
-                  >
+                  <div className="flex-1 min-h-0 flex items-center justify-center shrink-0">
+                    <div
+                      ref={storyCardRef}
+                      className="h-full max-h-full w-auto max-w-[360px] rounded-lg overflow-hidden border-2 border-[#00ff88]/50 shrink-0"
+                      style={{ aspectRatio: '9/16', background: '#0a0e0a', maxHeight: 'min(640px, 100%)' }}
+                    >
                     <div className="relative w-full h-full flex flex-col justify-end p-5 text-white font-terminal-mono">
                       {ARCHETYPE_IMAGES[result.id] ? (
                         <>
@@ -790,8 +791,9 @@ const App = () => {
                         </p>
                       </div>
                     </div>
+                    </div>
                   </div>
-                  <div className="flex gap-3 w-full">
+                  <div className="flex gap-3 w-full shrink-0">
                     <button
                       type="button"
                       onClick={handleShareDownload}
