@@ -786,12 +786,12 @@ const App = () => {
                       ) : (
                         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e0a] via-[#0d1a0d] to-[#0a0e0a]" />
                       )}
-                      <div className="relative z-10 space-y-2">
-                        <p className="text-[10px] uppercase tracking-[0.3em] text-[#00ff88]/90">TEST RESULT</p>
-                        <h2 className="text-xl md:text-2xl uppercase leading-tight tracking-wider text-[#00ff88] font-bold" style={{ textShadow: '0 0 12px rgba(0,255,136,0.5)' }}>{result.title}</h2>
-                        <p className="text-sm uppercase tracking-wide text-[#ff8c00]" style={{ textShadow: '0 0 8px rgba(255,140,0,0.4)' }}>{result.subtitle}</p>
-                        <p className="text-xs text-[#00ff88]/95 leading-relaxed line-clamp-3">{getShareBlurb(result.content)}</p>
-                        <p className="text-[10px] uppercase tracking-wider text-[#00ff88] pt-2 border-t border-[#00ff88]/40 mt-3">
+                      <div className="relative z-10 space-y-2 flex flex-col min-h-0">
+                        <p className="text-[10px] uppercase tracking-[0.3em] text-[#00ff88]/90 shrink-0">WHAT I AM AFTER MIDNIGHT:</p>
+                        <h2 className="text-xl md:text-2xl uppercase leading-tight tracking-wider text-[#00ff88] font-bold shrink-0" style={{ textShadow: '0 0 12px rgba(0,255,136,0.5)' }}>{result.title}</h2>
+                        <p className="text-sm uppercase tracking-wide text-[#ff8c00] shrink-0" style={{ textShadow: '0 0 8px rgba(255,140,0,0.4)' }}>{result.subtitle}</p>
+                        <p className="text-[11px] text-[#00ff88]/95 leading-snug overflow-y-auto min-h-0 flex-1">{ (result.content || '').replace(/\s+/g, ' ').trim() }</p>
+                        <p className="text-[10px] uppercase tracking-wider text-[#00ff88] pt-2 border-t border-[#00ff88]/40 mt-3 shrink-0">
                           Find your archetype — {getQuizUrl()}
                         </p>
                       </div>
