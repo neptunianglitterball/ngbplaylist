@@ -902,7 +902,10 @@ const App = () => {
               </div>
             )}
 
-            <div className="flex justify-center py-8 pb-[max(2rem,env(safe-area-inset-bottom))]">
+            <div
+              className="flex justify-center pt-4"
+              style={{ paddingBottom: 'max(5rem, calc(env(safe-area-inset-bottom) + 4rem))' }}
+            >
               <button
                 onClick={() => setStep('welcome')}
                 style={{ borderWidth: 4 }}
