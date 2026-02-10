@@ -41,6 +41,18 @@ When you complete the quiz, click **CREATE IN SPOTIFY** to log in with your Spot
 - **Keep the dev server running** (`npm run dev`) before you click "Create in Spotify" and leave it running until after Spotify redirects back.
 - **Open the app at http://127.0.0.1:5173** in the same browser tab/window (or at least the same browser). Start the quiz there, click "Create in Spotify", sign in on Spotify, and let it redirect back—don’t open the redirect URL on another device.
 
+## Global Dancefloor (live counter)
+
+The app shows how many people have discovered each archetype worldwide. To enable the live counter in production:
+
+1. Create a [Redis database on Upstash](https://console.upstash.com) (free tier is enough).
+2. In the Vercel project: **Settings** → **Environment Variables** → add:
+   - `UPSTASH_REDIS_REST_URL` (from Upstash)
+   - `UPSTASH_REDIS_REST_TOKEN` (from Upstash)
+3. Redeploy. The **api/dancefloor** serverless function will store and return counts.
+
+Without these variables, the app still works; the counter will show zeros and won’t persist (e.g. in local dev the API isn’t available unless you run `vercel dev`).
+
 ## Build for production
 
 ```bash

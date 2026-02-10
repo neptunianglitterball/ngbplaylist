@@ -297,8 +297,38 @@ const App = () => {
   const [shareModalOpen, setShareModalOpen] = useState(false);
   const [shareImageLoading, setShareImageLoading] = useState(false);
   const [shareLinkCopied, setShareLinkCopied] = useState(false);
+  const [dancefloorCounts, setDancefloorCounts] = useState(null);
+  const recordedArchetypeRef = useRef(null);
   const welcomeVideoRef = useRef(null);
   const storyCardRef = useRef(null);
+
+  const getDancefloorUrl = () => `${typeof window !== 'undefined' ? window.location.origin : ''}/api/dancefloor`;
+
+  const fetchDancefloorCounts = React.useCallback(async () => {
+    try {
+      const res = await fetch(getDancefloorUrl());
+      const data = await res.json();
+      if (data && typeof data.counts === 'object') setDancefloorCounts(data.counts);
+    } catch {
+      setDancefloorCounts(null);
+    }
+  }, []);
+
+  const recordArchetypeDiscovery = React.useCallback(async (archetypeId) => {
+    if (recordedArchetypeRef.current === archetypeId) return;
+    recordedArchetypeRef.current = archetypeId;
+    try {
+      const res = await fetch(getDancefloorUrl(), {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ archetype: archetypeId }),
+      });
+      const data = await res.json();
+      if (data && typeof data.counts === 'object') setDancefloorCounts(data.counts);
+    } catch {
+      // ignore
+    }
+  }, []);
 
   // Handle OAuth callback when returning from Spotify
   useEffect(() => {
@@ -317,6 +347,14 @@ const App = () => {
         });
     }
   }, []);
+
+  useEffect(() => {
+    if (step === 'welcome' || step === 'result') fetchDancefloorCounts();
+  }, [step, fetchDancefloorCounts]);
+
+  useEffect(() => {
+    if (step === 'result' && result?.id) recordArchetypeDiscovery(result.id);
+  }, [step, result?.id, recordArchetypeDiscovery]);
 
   // Force welcome video to play when on welcome step (retry until it plays)
   useEffect(() => {
@@ -350,6 +388,7 @@ const App = () => {
   };
 
   const setupQuiz = () => {
+    recordedArchetypeRef.current = null;
     const selected = shuffleArray(MASTER_QUESTION_POOL).slice(0, 5);
     setActiveQuestions(selected);
     setAnswers([]);
@@ -603,6 +642,12 @@ const App = () => {
             >
               START THE TEST
             </button>
+
+            {dancefloorCounts && (
+              <div className="text-[10px] terminal-text-dim uppercase tracking-[0.2em] pt-4">
+                <span className="terminal-glow-cyan">◆</span> {Object.values(dancefloorCounts).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0).toLocaleString()} on the global dancefloor
+              </div>
+            )}
           </div>
         )}
 
@@ -747,6 +792,28 @@ const App = () => {
                 </div>
               </div>
             </div>
+
+            {dancefloorCounts && (
+              <div className="terminal-panel bg-black/40 p-5 md:p-6 border border-[#00ff88]/30">
+                <h3 className="uppercase tracking-[0.2em] text-sm terminal-glow-cyan flex items-center gap-2 mb-3">
+                  <span className="text-[#00ff88]">◆</span> GLOBAL DANCEFLOOR
+                </h3>
+                <p className="text-[10px] terminal-text-dim uppercase tracking-wider mb-4">
+                  {Object.values(dancefloorCounts).reduce((a, b) => a + (typeof b === 'number' ? b : 0), 0).toLocaleString()} discovered worldwide
+                </p>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-1.5 text-[11px] terminal-text-green">
+                  {Object.entries(dancefloorCounts)
+                    .filter(([, n]) => typeof n === 'number')
+                    .sort((a, b) => (b[1] || 0) - (a[1] || 0))
+                    .map(([id, n]) => (
+                      <div key={id} className="flex justify-between gap-2">
+                        <span className="truncate">{ARCHETYPES[id]?.title?.replace(/^THE\s+/i, '') || id}</span>
+                        <span className="terminal-glow-orange shrink-0">{Number(n).toLocaleString()}</span>
+                      </div>
+                    ))}
+                </div>
+              </div>
+            )}
 
             <div className="flex justify-center pt-6 pb-12">
               <button onClick={() => setStep('welcome')} className="text-xs uppercase tracking-[0.3em] terminal-text-dim hover:terminal-glow-orange transition-colors border-b border-transparent hover:border-[#ff8c00]">
