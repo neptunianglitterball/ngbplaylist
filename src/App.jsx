@@ -10,6 +10,7 @@ import {
   Lightbulb,
   Gem,
   Sun,
+  Film,
   Share2,
   X,
 } from 'lucide-react';
@@ -233,6 +234,19 @@ const App = () => {
       { artist: "Fun Fun", title: "Color My Love", year: 1984 },
       { artist: "Silver Pozzoli", title: "Around My Dream", year: 1984 },
     ],
+
+    giallo: [
+      { artist: "Goblin", title: "Tenebre", year: 1982 },
+      { artist: "Kirlian Camera", title: "Blue Rooms", year: 1984 },
+      { artist: "Alexander Robotnick", title: "Dance Boy Dance", year: 1983 },
+      { artist: "Fred Ventura", title: "Wind of Change", year: 1984 },
+      { artist: "Fockewulf 190", title: "Body Heat (Instrumental)", year: 1984 },
+      { artist: "Steel Mind", title: "Bad Passion", year: 1982 },
+      { artist: "B.W.H.", title: "Stop", year: 1983 },
+      { artist: "Charlie", title: "Spacer Woman", year: 1983 },
+      { artist: "East Wall", title: "Privacy", year: 1984 },
+      { artist: "N.O.I.A.", title: "Looking For Love", year: 1983 },
+    ],
   };
 
   const ARCHETYPE_IMAGES = {
@@ -245,6 +259,7 @@ const App = () => {
     visionary: '/archetypes/naive-visionary.png',
     minimalist: '/archetypes/erotic-minimalist.png',
     escapist: '/archetypes/mediterranean-escapist.png',
+    giallo: '/archetypes/giallo-noirist.png',
   };
 
   const ARCHETYPE_ICONS = {
@@ -257,6 +272,7 @@ const App = () => {
     visionary: Lightbulb, // naïve visionary
     minimalist: Gem,      // erotic minimalist
     escapist: Sun,        // Mediterranean
+    giallo: Film,         // giallo noirist
   };
 
   const ARCHETYPES = {
@@ -269,19 +285,21 @@ const App = () => {
     visionary: { title: "THE NAÏVE VISIONARY", subtitle: "Too honest to fail.", content: "Big hooks. Cheap keyboards. Total belief.\nThis music doesn't know what it's 'supposed' to be — and that's why it works.\nDreams louder than technique. Emotion bigger than budget.\nPure heart. Zero irony.\nTomorrow starts here." },
     minimalist: { title: "THE EROTIC MINIMALIST", subtitle: "Less sound. More tension.", content: "A whisper instead of a chorus.\nRepetition that seduces. Rhythm that waits.\nThis is desire slowed down — music that stares instead of touching.\nFashionable. Dangerous. Intimate.\nNothing explodes. Everything burns." },
     escapist: { title: "THE MEDITERRANEAN ESCAPIST", subtitle: "Sunset in stereo.", content: "Warm nights. Coastal highways. Drinks sweating in glass.\nThis is music as vacation — light, melodic, quietly nostalgic.\nA fantasy of Europe where time moves slower and love feels easier.\nDance now. Remember later." },
+    giallo: { title: "THE GIALLO NOIRIST", subtitle: "The sound of rain-slicked pavement and a mystery unsolved.", content: "This archetype focuses on the tension-filled, cinematic side of Italo—think suspenseful arpeggios and minor-key synths.\nThe sound of a thriller. Neon reflected on wet streets. Something unsolved in the air.\nNot quite horror. Not quite disco.\nPure atmosphere." },
   };
 
   const MASTER_QUESTION_POOL = [
     { iconKey: 'car', text: "The Italian Riviera at dusk. What are you driving?", options: [{ text: "A matte-black Lancia Delta with tinted windows", type: "modernist" }, { text: "A custom-tuned Porsche with digital dash", type: "engineer" }, { text: "A silver Alfa Romeo Spider with the top down", type: "escapist" }, { text: "A white Ferrari Testarossa, headed for the city", type: "professional" }, { text: "A beat-up Fiat with 'I Love You' scratched in the paint", type: "visionary" }] },
-    { iconKey: 'synth', text: "A synthesizer melody begins. What is its shape?", options: [{ text: "A cold, disciplined line that repeats forever", type: "engineer" }, { text: "A sweeping, emotional arc that breaks your heart", type: "dreamer" }, { text: "A shimmering arpeggio floating into space", type: "cosmic" }, { text: "A low, growling pulse that shakes the floor", type: "mechanic" }, { text: "A sparse, seductive whisper of a sound", type: "minimalist" }] },
+    { iconKey: 'synth', text: "A synthesizer melody begins. What is its shape?", options: [{ text: "A cold, disciplined line that repeats forever", type: "engineer" }, { text: "A sweeping, emotional arc that breaks your heart", type: "dreamer" }, { text: "A shimmering arpeggio floating into space", type: "cosmic" }, { text: "A low, growling pulse that shakes the floor", type: "mechanic" }, { text: "A suspenseful arpeggio that never quite resolves", type: "giallo" }] },
     { iconKey: 'cover', text: "You are designing the cover for your debut 12-inch. What's the image?", options: [{ text: "A grainy photograph of an empty concrete room", type: "modernist" }, { text: "A hand-drawn romantic sunset", type: "dreamer" }, { text: "A sleek airbrushed chrome robot", type: "cosmic" }, { text: "A polaroid of the band, no retouching", type: "visionary" }, { text: "Minimalist geometric shapes on black card", type: "engineer" }] },
     { iconKey: 'dancefloor', text: "The dancefloor is packed. What is your role?", options: [{ text: "Sweating in the center, obsessed with the beat", type: "mechanic" }, { text: "Watching the crowd from behind dark glasses", type: "modernist" }, { text: "Dancing too hard, singing every word, not noticing who's watching", type: "visionary" }, { text: "Closing your eyes and imagining you're on Saturn", type: "cosmic" }, { text: "Staring intensely at the person across the room", type: "minimalist" }] },
     { iconKey: 'music', text: "What is the ultimate purpose of music?", options: [{ text: "To capture a feeling before it disappears", type: "visionary" }, { text: "To cross oceans and achieve success", type: "professional" }, { text: "To say the things I'm too shy to speak", type: "dreamer" }, { text: "To make the world feel like a long Sunday", type: "escapist" }, { text: "To push the body until it forgets the mind", type: "mechanic" }] },
-    { iconKey: 'light', text: "Describe the lighting in your ideal midnight session:", options: [{ text: "A single dim violet light at the far end", type: "minimalist" }, { text: "Piercing white strobes through industrial fog", type: "mechanic" }, { text: "Moving lasers cutting through total darkness", type: "cosmic" }, { text: "A single warm spotlight on the singer", type: "visionary" }, { text: "Warm amber floods and golden accents, like a beach club at closing time", type: "escapist" }] },
+    { iconKey: 'light', text: "Describe the lighting in your ideal midnight session:", options: [{ text: "Rain on the windows, neon reflected on wet pavement", type: "giallo" }, { text: "Piercing white strobes through industrial fog", type: "mechanic" }, { text: "Moving lasers cutting through total darkness", type: "cosmic" }, { text: "A single warm spotlight on the singer", type: "visionary" }, { text: "Warm amber floods and golden accents, like a beach club at closing time", type: "escapist" }] },
     { iconKey: 'drink', text: "You're at a bar in Milan. What are you ordering?", options: [{ text: "A classic Campari and soda, no ice", type: "escapist" }, { text: "A glowing blue futuristic cocktail", type: "cosmic" }, { text: "A fresh glass of water and a sincere smile", type: "visionary" }, { text: "The most expensive Champagne on the list", type: "professional" }, { text: "A warm espresso and a single cigarette", type: "modernist" }] },
     { iconKey: 'vocals', text: "How should the vocals make you feel?", options: [{ text: "Distant, ghostly, and slightly menacing", type: "modernist" }, { text: "Soulful, high-energy, and ready for the world", type: "professional" }, { text: "Like a breeze coming off the Tyrrhenian Sea", type: "escapist" }, { text: "Sincere, fragile, and deeply emotional", type: "dreamer" }, { text: "Obsessive, repetitive, and breathy", type: "minimalist" }] },
     { iconKey: 'era', text: "It's 1983. What is your primary obsession?", options: [{ text: "The texture of fine silk and leather", type: "minimalist" }, { text: "The upcoming launch of the space colony", type: "cosmic" }, { text: "Finding a love that doesn't hurt", type: "dreamer" }, { text: "Improving the efficiency of the sequence", type: "engineer" }, { text: "Escaping the city for the coast", type: "escapist" }] },
     { iconKey: 'sunrise', text: "You walk home as the sun rises. What are you thinking?", options: [{ text: "I hope no one saw me", type: "minimalist" }, { text: "The machines never sleep", type: "engineer" }, { text: "That was the greatest night of my life", type: "visionary" }, { text: "I should have said something, but it's too late now", type: "dreamer" }, { text: "Everything is already changing", type: "modernist" }] },
+    { iconKey: 'film', text: "The soundtrack to your night sounds like which film?", options: [{ text: "A giallo. Rain, a trench coat, a mystery unsolved", type: "giallo" }, { text: "A love story with a sad ending", type: "dreamer" }, { text: "A sci-fi blockbuster about the future", type: "cosmic" }, { text: "A documentary about a nightclub", type: "mechanic" }, { text: "A fashion film—cold, beautiful, distant", type: "modernist" }] },
   ];
 
   const [activeQuestions, setActiveQuestions] = useState([]);
@@ -635,6 +653,16 @@ const App = () => {
         <path d="M22 12h-4" />
         <path d="M19.07 4.93l-2.83 2.83" />
         <path d="M12 8a4 4 0 11-4 4" />
+      </svg>
+    ),
+    film: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="square" className="w-8 h-8 shrink-0">
+        <rect x="2" y="2" width="20" height="20" rx="2" />
+        <path d="M7 2v20M17 2v20M2 12h20" />
+        <circle cx="7" cy="7" r="1" />
+        <circle cx="17" cy="7" r="1" />
+        <circle cx="7" cy="17" r="1" />
+        <circle cx="17" cy="17" r="1" />
       </svg>
     ),
   };
